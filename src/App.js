@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Navbar from './components/Navbar'
 import MainPage from './components/MainPage'
+import Cart from './components/Cart'
 // import axios from 'axios';
 
 class App extends Component {
@@ -22,8 +23,8 @@ class App extends Component {
           <div className="App">
             <Navbar/>
             <Switch>
-              <Route exact path="/" render={ () => <MainPage/>}
-              />
+              <Route exact path="/" component={MainPage}/>
+              <Route path="/cart" component={Cart}/>
             </Switch>
           </div>
       </BrowserRouter>

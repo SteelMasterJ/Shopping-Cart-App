@@ -4,6 +4,16 @@ import { connect } from 'react-redux';
 
 class MainPage extends Component {
 
+    handleAdd = (id) => {
+        // console.log(id);
+        this.props.addToCart(id); 
+    }
+
+    handleSubtract = (id) => {
+        // console.log(id);
+        this.props.subtractFromCart(id); 
+    }
+
     render() {
         // console.log(this.props.saleItems);
 
@@ -14,8 +24,8 @@ class MainPage extends Component {
                     <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.type}</td>
                     <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.price}</td>
                     <td className="bg-blue-200 border-2 border-collapse border-blue-500">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded">+</button>
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded">-</button>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleAdd(item.id)}}>+</button>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
                     </td>
                 </tr>
             )
@@ -72,8 +82,15 @@ class MainPage extends Component {
 const mapStateToProps = (state) => {
     return {
         saleItems: state.saleItems
-        }
+    }
 }
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         addToCart: (id) => {dispatch(addToCart(id))},
+//         subtractFromCart: (id) => {dispatch(subtractFromCart(id))},
+//     }
+// }
 
 
 export default connect(mapStateToProps)(MainPage)

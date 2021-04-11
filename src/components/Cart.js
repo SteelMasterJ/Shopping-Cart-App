@@ -1,0 +1,56 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+
+class Cart extends Component{
+
+    render() {
+              
+        let cartItems = this.props.items.length ?
+            (  
+                this.props.items.map(item => {
+                    return(
+                        <div>
+                            <ul className={`grid grid-cols-3 gap-8 pt-16 mx-8`}>
+                                    <li className={`bg-gray-100 rounded-xl px-8 py-6 cursor-pointer hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
+                                        <div className="text-center">
+                                            <h3 className="mb-3 text-xl font-semibold text-purple-600">{item.name}</h3>
+                                            <p>Category: {item.type}</p>
+                                            <p>Price: ${parseFloat(item.price).toFixed(2)}</p> 
+                                            <p>
+                                                Quantity: {item.quantity} 
+                                            </p>
+                                        </div>        
+                                    </li>
+                            </ul>
+                            <div>
+                                <h2 className={`text-4xl font-bold text-gray-800 mt-8 text-center`}>Total: $</h2>   
+                            </div>  
+                        </div>
+                    )
+                })
+            ):
+
+             (
+                <div className="mx-auto">
+                    <p className="text-1xl text-red-600 font-extrabold mb-8 text-center">Nothing In Cart</p>
+                    <Link to="/"><button className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 m-1 rounded">Continue Shopping</button></Link>
+                </div>
+             )
+       return(
+            <div className="pt-8 flex flex-col bg-blue-200 h-screen">
+                <h1 className="mx-auto text-4xl text-purple-600 font-extrabold mb-8">Your Cart</h1>
+                {cartItems}
+            </div>
+       )
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        items: state.cartItems
+    }
+}
+
+export default connect(mapStateToProps)(Cart)
