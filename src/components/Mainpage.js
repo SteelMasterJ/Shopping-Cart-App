@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addToCart } from './actions/cartActions'
+import { subtractFromCart } from './actions/cartActions'
 
 
 class MainPage extends Component {
@@ -19,7 +21,7 @@ class MainPage extends Component {
 
         let saleItemList = this.props.saleItems.map( item => {
             return (
-                <tr>
+                <tr key={item.id}>
                     <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.name}</td>
                     <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.type}</td>
                     <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.price}</td>
@@ -85,12 +87,12 @@ const mapStateToProps = (state) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         addToCart: (id) => {dispatch(addToCart(id))},
-//         subtractFromCart: (id) => {dispatch(subtractFromCart(id))},
-//     }
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addToCart: (id) => {dispatch(addToCart(id))},
+        subtractFromCart: (id) => {dispatch(subtractFromCart(id))},
+    }
+}
 
 
-export default connect(mapStateToProps)(MainPage)
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage)
