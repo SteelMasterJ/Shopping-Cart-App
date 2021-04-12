@@ -14,11 +14,11 @@ class Cart extends Component{
                         <li className={`bg-gray-100 rounded-xl px-8 py-6 cursor-pointer hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
                             <div className="text-center">
                                 <h3 className="mb-3 text-xl font-semibold text-purple-600">{item.name}</h3>
-                                <p>Category: {item.type}</p>
-                                <p>Price: ${parseFloat(item.price).toFixed(2)}</p> 
+                                <p>Unit Price: ${parseFloat(item.price).toFixed(2)}</p> 
                                 <p>
                                     Quantity: {item.quantity} 
                                 </p>
+                                <p>Total Item Price: ${parseFloat(item.price * item.quantity).toFixed(2)}</p>
                             </div>        
                         </li>
                     )

@@ -1,39 +1,43 @@
 import { ADD_TO_CART, SUBTRACT_FROM_CART } from '../actions/action-types/constActions';
-// import { SUBTRACT_FROM_CART } from '../actions/action-types/constActions';
 
 
 const initState = {
-    saleItems: [
-        {id: 1, name: "Brown eggs", type: "dairy", price: 28.1},
-        {id: 2, name: "Watermelon", type: "fruit", price: 29.45},
-        {id: 3, name: "Asparagus", type: "vegetable", price: 18.95},
-        {id: 4, name: "Green smoothie", type: "dairy", price: 17.68},
-        {id: 5, name: "Raw legums", type: "vegetable", price: 17.11},
-        {id: 6, name: "Baking cake", type: "dairy", price: 11.14},
-    ],
     cartItems:[],
     total: 0
 
 }
 
+//function to create new cartItems and push them into the state array
+const createCartItem = function(id, name, price) {
+    return ({
+        id: id,
+        name: name,
+        price: price,
+        quantity: 0,
+    })
+}
+
 const cartReducer= (state = initState, action) => {
     //MainPage Action Logic
-    if(action.type === ADD_TO_CART) {
-        let cartItem = state.saleItems.find(item => item.id === action.id)
-        // console.log("cartItem = " + JSON.stringify(cartItem));
 
-        //check if the action id exists in the cartItems
+    //if + button is clicked
+    if(action.type === ADD_TO_CART) {
+        //match a for sale item id with the clicked item id
+        let cartItem = createCartItem(action.id, action.name, action.price)
+
+        //check if the clicked item id exists in the cartItems
+        console.log(action.id);
         let existedItem = state.cartItems.find(item => action.id === item.id)
-        // console.log("existedItem = " + JSON.stringify(existedItem));
-        if(existedItem)
-        {
-            cartItem.quantity += 1
+
+        //if there is an item already in the cart with the clicked item id, just add 1 to that item's quantity, else add new clicked item to cart.
+        if(existedItem) {
+            console.log("existed item id = " + existedItem.id);
+            existedItem.quantity += 1
             return {
                 ...state,
                 total: state.total + cartItem.price 
                 }
-        }
-        else {
+        } else {
             cartItem.quantity = 1;
             //calculating the total
             let newTotal = state.total + cartItem.price 
@@ -45,9 +49,15 @@ const cartReducer= (state = initState, action) => {
             
         }
     }
-    if(action.type=== SUBTRACT_FROM_CART) {  
+
+    //if - button is clicked
+    if(action.type === SUBTRACT_FROM_CART) {  
+        //match a sale item id with the clicked item id
         let addedItem = state.cartItems.find(item => item.id === action.id) 
-        //if the qt == 0 then it should be removed
+
+        //if there is no added item match(meaning quantity is 0) then do nothing
+        //else if there is 1 then remove that item from the cart
+        //else finally if the quantity of the clicked item is more than 1 just remove 1 from it's quantity
         if (!(addedItem)) {
             return state
         } else if (addedItem.quantity === 1) {
@@ -68,6 +78,7 @@ const cartReducer= (state = initState, action) => {
         }
         
     }
+    //if anything else happens, do nothing
     else {
         return state
     }

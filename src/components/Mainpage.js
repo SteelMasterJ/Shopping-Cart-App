@@ -2,13 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToCart } from './actions/cartActions'
 import { subtractFromCart } from './actions/cartActions'
+import axios from 'axios';
 
 
 class MainPage extends Component {
 
-    handleAdd = (id) => {
+    constructor() {
+        super();
+        this.state = {
+          forSaleItems: []
+        };
+      }
+
+    handleAdd = (id, name, price) => {
         // console.log(id);
-        this.props.addToCart(id); 
+        this.props.addToCart(id, name, price); 
     }
 
     handleSubtract = (id) => {
@@ -16,17 +24,28 @@ class MainPage extends Component {
         this.props.subtractFromCart(id); 
     }
 
+    componentDidMount() {
+        console.log("componentdidMount");
+        // Simple GET request using axios, then setting the state
+        axios.get('https://api.mocki.io/v1/b8bead03')
+            .then(response => {
+                this.setState({
+                    forSaleItems: response.data
+                })
+            });
+    }
+
     render() {
         // console.log(this.props.saleItems);
 
-        let saleItemList = this.props.saleItems.map( item => {
+        let saleItemList = this.state.forSaleItems.map( item => {
             return (
                 <tr key={item.id}>
                     <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.name}</td>
                     <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.type}</td>
-                    <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.price}</td>
+                    <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{parseFloat(item.price).toFixed(2)}</td>
                     <td className="bg-blue-200 border-2 border-collapse border-blue-500">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleAdd(item.id)}}>+</button>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
                     </td>
                 </tr>
@@ -81,18 +100,13 @@ class MainPage extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        saleItems: state.saleItems
-    }
-}
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addToCart: (id) => {dispatch(addToCart(id))},
+        addToCart: (id, name, price) => {dispatch(addToCart(id, name, price))},
         subtractFromCart: (id) => {dispatch(subtractFromCart(id))},
     }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage)
+export default connect(null, mapDispatchToProps)(MainPage)
