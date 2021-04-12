@@ -13,7 +13,8 @@ class MainPage extends Component {
           forSaleItems: [],
           error: '',
           searchValue: '',
-          searchedItems: ''
+          searchedItems: '',
+          showAllItems: true
         };
       }
 
@@ -36,17 +37,32 @@ class MainPage extends Component {
                 results.push(this.state.forSaleItems[i]);
             }
         }
+        let searchedItemList = results.map( item => {
+            return (
+                <tr key={item.id}>
+                    <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.name}</td>
+                    <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.type}</td>
+                    <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{parseFloat(item.price).toFixed(2)}</td>
+                    <td className="bg-blue-200 border-2 border-collapse border-blue-500">
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
+                    </td>
+                </tr>
+            )
+        })
         console.log(results);
         this.setState({
-            searchedItems: results
+            searchedItems: searchedItemList,
+            showAllItems: false
         })
     }
 
     handleSearchValueChange = (evt) => {
         const event = evt.target;
-        console.log(event.value);
+        console.log("handle search change fired");
         this.setState({
-            searchValue: event.value
+            searchValue: event.value,
+            showAllItems: true
         })
     }
 
@@ -88,6 +104,8 @@ class MainPage extends Component {
             )
         })
 
+        let searchedItemShowList = this.state.searchedItems;
+
         return (
             <div className="pt-8 flex flex-col bg-blue-200 h-screen">
                 <h1 className="mx-auto text-4xl text-purple-600 font-extrabold mb-8">Items Available Today</h1>
@@ -95,7 +113,7 @@ class MainPage extends Component {
                     onSubmit={this.handleSearchSubmit}
                 >
                     <input 
-                    className="mx-auto block my-1 border-gray-300 rounded-lg shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50"
+                    className="h-8 w-64 mx-auto block my-4 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring"
                     type="search" 
                     name="search"
                     onChange={this.handleSearchValueChange}
@@ -105,6 +123,7 @@ class MainPage extends Component {
                     />
                 </form>
                 {(this.state.error) ? <p className={`mx-auto text-red-500`}>Error Fetching data! :(</p> : <div></div>}
+                {(this.state.showAllItems === false && !this.state.searchedItemList) ? <p className={`mx-auto text-red-500`}>No Results :( Try Searching Again</p> : <div></div>}
                 <table className="table-fixed bg-blue-200 border-4 border-collapse border-blue-500 mx-4 flex-auto">
                     <thead>
                         <tr>
@@ -115,7 +134,7 @@ class MainPage extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {saleItemList}
+                        {(this.state.showAllItems) ? saleItemList : searchedItemShowList}
                         {/* <tr>
                             <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">Intro to CSS</td>
                             <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">Adam</td>
