@@ -10,7 +10,10 @@ class MainPage extends Component {
     constructor() {
         super();
         this.state = {
-          forSaleItems: []
+          forSaleItems: [],
+          error: '',
+          searchValue: '',
+          searchedItems: ''
         };
       }
 
@@ -24,13 +27,46 @@ class MainPage extends Component {
         this.props.subtractFromCart(id); 
     }
 
+    handleSearchSubmit = (e) => {
+        e.preventDefault();
+        let results = [];
+        let query = this.state.searchValue;
+        for (var i=0 ; i < this.state.forSaleItems.length ; i++) {
+            if (this.state.forSaleItems[i].name.toString().toLowerCase() === query.toString().toLowerCase()) {
+                results.push(this.state.forSaleItems[i]);
+            }
+        }
+        console.log(results);
+        this.setState({
+            searchedItems: results
+        })
+    }
+
+    handleSearchValueChange = (evt) => {
+        const event = evt.target;
+        console.log(event.value);
+        this.setState({
+            searchValue: event.value
+        })
+    }
+
     componentDidMount() {
         console.log("componentdidMount");
         // Simple GET request using axios, then setting the state
-        axios.get('https://api.mocki.io/v1/b8bead03')
+        //Since mocki is having issues here are the 2 urls for copy/paste: https://my-json-server.typicode.com/steelmasterj/myjsonserver/data
+        //Since mocki is having issues here are the 2 urls for copy/paste: https://api.mocki.io/v1/b8bead03
+        axios.get('https://my-json-server.typicode.com/steelmasterj/myjsonserver/data')
             .then(response => {
+                console.log(response);
                 this.setState({
-                    forSaleItems: response.data
+                    forSaleItems: response.data,
+                    error: ''
+                })
+            })
+            .catch(error => {
+                console.log('Error fetching and parsing data', error);
+                this.setState({
+                    error: "error fetching data"
                 })
             });
     }
@@ -55,6 +91,20 @@ class MainPage extends Component {
         return (
             <div className="pt-8 flex flex-col bg-blue-200 h-screen">
                 <h1 className="mx-auto text-4xl text-purple-600 font-extrabold mb-8">Items Available Today</h1>
+                <form 
+                    onSubmit={this.handleSearchSubmit}
+                >
+                    <input 
+                    className="mx-auto block my-1 border-gray-300 rounded-lg shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50"
+                    type="search" 
+                    name="search"
+                    onChange={this.handleSearchValueChange}
+                    placeholder="Search"
+                    aria-label="Search"
+                    required
+                    />
+                </form>
+                {(this.state.error) ? <p className={`mx-auto text-red-500`}>Error Fetching data! :(</p> : <div></div>}
                 <table className="table-fixed bg-blue-200 border-4 border-collapse border-blue-500 mx-4 flex-auto">
                     <thead>
                         <tr>
