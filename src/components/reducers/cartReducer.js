@@ -17,7 +17,8 @@ const createCartItem = function(id, name, price) {
     })
 }
 
-const cartReducer= (state = initState, action) => {
+//main reducer function
+const cartReducer = (state = initState, action) => {
     //MainPage Action Logic
 
     //if + button is clicked
