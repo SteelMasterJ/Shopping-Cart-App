@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToCart } from './actions/cartActions'
 import { subtractFromCart } from './actions/cartActions'
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -191,7 +192,16 @@ class MainPage extends Component {
         return (
             <div className="pt-8 flex flex-col bg-gradient-to-b from-blue-300 via-purple-200 to-white h-screen">
                 <h1 className="mx-auto text-4xl text-purple-600 font-semibold mb-8 italic tracking-tight">Items Available Today</h1>
-                {(this.props.total > 0) ? <p className={`mx-auto text-purple-600 text-2xl`}>Current Grand Total: ${parseFloat(this.props.total).toFixed(2)}</p> : <div></div>}
+                {(this.props.total > 0) ? 
+                    <p className={`mx-auto text-purple-600 text-2xl`}>Current Grand Total: ${parseFloat(this.props.total).toFixed(2)}</p>
+                     : 
+                    <div></div>
+                }
+                {(this.props.total > 0) ? 
+                    <Link to="/cart" className="mx-auto"><button className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 m-1 rounded">Go To Your Cart</button></Link>
+                     : 
+                    <div></div>
+                }
                 {((this.state.showAllItems === false) && (!this.state.searchedItems)) ? <p className={`mx-auto text-red-500`}>No Results :( Try Searching Again</p> : <div></div>}
                 <div className="flex sm:flex-row flex-col gap-6">
                     <div className="mx-auto sm:ml-auto">
