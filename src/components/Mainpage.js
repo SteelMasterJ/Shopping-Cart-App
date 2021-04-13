@@ -41,22 +41,26 @@ class MainPage extends Component {
         let query = this.state.searchValue;
         let searchedItemList;
         for (let i=0 ; i < this.state.forSaleItems.length ; i++) {
-            if (this.state.forSaleItems[i].name.toString().toLowerCase() === query.toString().toLowerCase()) {
+            if (this.state.forSaleItems[i].name.toString().toLowerCase().includes(query.toString().toLowerCase())) {
                 results.push(this.state.forSaleItems[i]);
             }
         }
         if (results.length > 0) {
             searchedItemList = results.map( item => {
                 return (
-                    <tr key={item.id}>
-                        <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.name}</td>
-                        <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.type}</td>
-                        <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{parseFloat(item.price).toFixed(2)}</td>
-                        <td className="bg-blue-200 border-2 border-collapse border-blue-500">
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
-                        </td>
-                    </tr>
+                    <li className={`bg-white border-2 border-blue-500 rounded-xl px-8 py-6 mb-2 cursor-pointer shadow hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
+                        <div className="text-center">
+                            <h3 className="mb-3 text-xl font-semibold text-purple-600">{item.name}</h3>
+                            <p>Unit Price: ${parseFloat(item.price).toFixed(2)}</p> 
+                            <p>
+                                Category: {item.type} 
+                            </p>
+                            <div className="flex justify-center">
+                            <button className="bg-purple-700 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-500" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
+                            <button className="bg-purple-600 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-400" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
+                            </div>
+                        </div>        
+                    </li>
                 )
             })
         }
@@ -115,15 +119,19 @@ class MainPage extends Component {
             if (results.length > 0) {
                 searchedItemList = results.map( item => {
                     return (
-                        <tr key={item.id}>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.name}</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.type}</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{parseFloat(item.price).toFixed(2)}</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500">
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
-                            </td>
-                        </tr>
+                        <li className={`bg-white border-2 border-blue-500 rounded-xl px-8 py-6 mb-2 cursor-pointer shadow hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
+                            <div className="text-center">
+                                <h3 className="mb-3 text-xl font-semibold text-purple-600">{item.name}</h3>
+                                <p>Unit Price: ${parseFloat(item.price).toFixed(2)}</p> 
+                                <p>
+                                    Category: {item.type} 
+                                </p>
+                                <div className="flex justify-center">
+                                <button className="bg-purple-700 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-500" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
+                            <button className="bg-purple-600 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-400" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
+                                </div>
+                            </div>        
+                        </li>
                     )
                 })
             }
@@ -161,15 +169,19 @@ class MainPage extends Component {
         //variable used to create table rows for each item returned from the API
         let saleItemList = this.state.forSaleItems.map( item => {
             return (
-                <tr key={item.id}>
-                    <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.name}</td>
-                    <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{item.type}</td>
-                    <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">{parseFloat(item.price).toFixed(2)}</td>
-                    <td className="bg-blue-200 border-2 border-collapse border-blue-500">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
-                    </td>
-                </tr>
+                <li className={`bg-white border-2 border-blue-500 rounded-xl px-8 py-6 mb-2 cursor-pointer shadow hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
+                    <div className="text-center">
+                        <h3 className="mb-3 text-xl font-semibold text-purple-600">{item.name}</h3>
+                        <p>Unit Price: ${parseFloat(item.price).toFixed(2)}</p> 
+                        <p>
+                            Category: {item.type} 
+                        </p>
+                        <div className="flex justify-center">
+                            <button className="bg-purple-700 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-500" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
+                            <button className="bg-purple-600 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-400" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
+                        </div>
+                    </div>        
+                </li>
             )
         })
 
@@ -177,86 +189,64 @@ class MainPage extends Component {
         let searchedItemShowList = this.state.searchedItems;
 
         return (
-            <div className="pt-8 flex flex-col bg-blue-200 h-screen">
-                <h1 className="mx-auto text-4xl text-purple-600 font-extrabold mb-8">Items Available Today</h1>
+            <div className="pt-8 flex flex-col bg-gradient-to-b from-blue-300 via-purple-200 to-white h-screen">
+                <h1 className="mx-auto text-4xl text-purple-600 font-semibold mb-8 italic tracking-tight">Items Available Today</h1>
+                {(this.props.total > 0) ? <p className={`mx-auto text-purple-600 text-2xl`}>Current Grand Total: ${parseFloat(this.props.total).toFixed(2)}</p> : <div></div>}
                 {((this.state.showAllItems === false) && (!this.state.searchedItems)) ? <p className={`mx-auto text-red-500`}>No Results :( Try Searching Again</p> : <div></div>}
-                <form 
-                    onSubmit={this.handleSearchSubmit}
-                >
-                    <input 
-                    className="h-8 w-64 mx-auto block my-4 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring"
-                    type="search" 
-                    name="search"
-                    onChange={this.handleSearchValueChange}
-                    placeholder="Search"
-                    aria-label="Search"
-                    required
-                    />
-                </form>
-                <form>
-                    <div className="text-center grid grid-rows-1">
-                        <select
-                            className="h-8 w-64 mx-auto my-4 rounded border-gray-300 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50"
-                            name="meet-time" 
-                            id="meet-time"
-                            onChange={this.handleDropdownValueChange}
+                <div className="flex sm:flex-row flex-col gap-6">
+                    <div className="mx-auto sm:ml-auto">
+                        <form 
+                            onSubmit={this.handleSearchSubmit}
                         >
-                            <option value="Select Category">Select Category</option>
-                            <option value="Bakery">Bakery</option>
-                            <option value="Dairy">Dairy</option>
-                            <option value="Fruit">Fruit</option>
-                            <option value="Meat">Meat</option>
-                            <option value="Vegan">Vegan</option>
-                            <option value="Vegetable">Vegetable</option>
-                        </select>
+                            <input 
+                            className="h-8 w-64 mx-auto block my-4 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring"
+                            type="search" 
+                            name="search"
+                            onChange={this.handleSearchValueChange}
+                            placeholder="Search"
+                            aria-label="Search"
+                            required
+                            />
+                        </form>
                     </div>
-                </form>
+                    <div className="mx-auto sm:mr-auto">
+                        <form>
+                            <div className="text-center">
+                                <select
+                                    className="h-8 w-64 mx-auto my-4 rounded border-gray-300 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 shadow"
+                                    name="meet-time" 
+                                    id="meet-time"
+                                    onChange={this.handleDropdownValueChange}
+                                >
+                                    <option value="Select Category">Select Category</option>
+                                    <option value="Bakery">Bakery</option>
+                                    <option value="Dairy">Dairy</option>
+                                    <option value="Fruit">Fruit</option>
+                                    <option value="Meat">Meat</option>
+                                    <option value="Vegan">Vegan</option>
+                                    <option value="Vegetable">Vegetable</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 {(this.state.error) ? <p className={`mx-auto text-red-500`}>Error Fetching data! :(</p> : <div></div>}
-                <table className="table-fixed bg-blue-200 border-4 border-collapse border-blue-500 mx-4 flex-auto">
-                    <thead>
-                        <tr>
-                        <th className="w-1/2 bg-blue-200 border-4 border-collapse border-blue-500">Name</th>
-                        <th className="w-1/4 bg-blue-200 border-4 border-collapse border-blue-500">Category</th>
-                        <th className="w-1/4 bg-blue-200 border-4 border-collapse border-blue-500">Price</th>
-                        <th className="w-8 bg-blue-200 border-4 border-collapse border-blue-500">Add/Remove</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                {(this.state.forSaleItems.length > 0) ?                 
+                    <ul className={`grid grid-cols-1 md:grid-cols-3 gap-8 pt-6 mx-8`}>
                         {(this.state.showAllItems) ? saleItemList : searchedItemShowList}
-                        {/* <tr>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">Intro to CSS</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">Adam</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">858</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500">
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded">+</button>
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded">-</button>
-                            </td>
-                        </tr>
-                        <tr className="bg-blue-200">
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">A Long and Winding Tour of the History of UI Frameworks and Tools and the Impact on Design</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">Adam</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">112</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500">
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded">+</button>
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded">-</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">Intro to JavaScript</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">Chris</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500 text-center">1,280</td>
-                            <td className="bg-blue-200 border-2 border-collapse border-blue-500">
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded">+</button>
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded">-</button>
-                            </td>
-                        </tr> */}
-                    </tbody>
-                </table>
+                    </ul> :
+                    <p className="mx-auto">Loading items...</p>
+                }
             </div>
         )
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        total: state.total
+    }
+}
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -266,4 +256,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(null, mapDispatchToProps)(MainPage)
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage)

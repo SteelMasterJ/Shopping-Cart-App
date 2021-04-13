@@ -11,16 +11,16 @@ class Cart extends Component{
             (  
                 this.props.items.map(item => {
                     return(
-                        <li className={`bg-gray-100 rounded-xl px-8 py-6 cursor-pointer hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
-                            <div className="text-center">
-                                <h3 className="mb-3 text-xl font-semibold text-purple-600">{item.name}</h3>
-                                <p>Unit Price: ${parseFloat(item.price).toFixed(2)}</p> 
-                                <p>
-                                    Quantity: {item.quantity} 
-                                </p>
-                                <p>Total Item Price: ${parseFloat(item.price * item.quantity).toFixed(2)}</p>
-                            </div>        
-                        </li>
+                            <li className={`bg-gray-100 rounded-xl px-8 py-6 cursor-pointer shadow hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
+                                <div className="text-center">
+                                    <h3 className="mb-3 text-xl font-semibold text-purple-600">{item.name}</h3>
+                                    <p>Unit Price: ${parseFloat(item.price).toFixed(2)}</p> 
+                                    <p>
+                                        Quantity: {item.quantity} 
+                                    </p>
+                                    <p>Total Item Price: ${parseFloat(item.price * item.quantity).toFixed(2)}</p>
+                                </div>        
+                            </li>
                     )
                 })
             ):
@@ -34,7 +34,7 @@ class Cart extends Component{
        return(
             <div className="pt-8 flex flex-col bg-blue-200 h-screen">
                 <h1 className="mx-auto text-4xl text-purple-600 font-extrabold mb-8">Your Cart</h1>
-                <ul className={`grid grid-cols-3 gap-8 pt-16 mx-8`}>
+                <ul className={(this.props.total === 0) ? `grid grid-cols-1 gap-8 pt-16 mx-8` : `grid grid-cols-3 gap-8 pt-16 mx-8`}>
                     {cartItems}
                 </ul>
                 <div>
