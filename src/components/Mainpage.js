@@ -16,7 +16,8 @@ class MainPage extends Component {
           searchValue: '',
           searchedItems: '',
           showAllItems: true,
-          matchFound: false
+          matchFound: false,
+          loading: true
         };
       }
 
@@ -153,13 +154,15 @@ class MainPage extends Component {
                 // console.log(response);
                 this.setState({
                     forSaleItems: response.data,
-                    error: ''
+                    error: '',
+                    loading: false
                 })
             })
             .catch(error => {
                 console.log('Error fetching and parsing data', error);
                 this.setState({
-                    error: "error fetching data"
+                    error: "error fetching data",
+                    loading: false
                 })
             });
     }
@@ -241,7 +244,7 @@ class MainPage extends Component {
                     </div>
                 </div>
                 {(this.state.error) ? <p className={`mx-auto text-red-500`}>Error Fetching data! :(</p> : <div></div>}
-                {(this.state.forSaleItems.length > 0) ?                 
+                {(this.state.loading === false) ?                 
                     <ul className={`grid grid-cols-1 md:grid-cols-3 gap-8 pt-6 mx-8`}>
                         {(this.state.showAllItems) ? saleItemList : searchedItemShowList}
                     </ul> :
