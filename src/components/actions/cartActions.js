@@ -18,10 +18,3 @@ export const subtractFromCart = (id) => {
         type: SUBTRACT_FROM_CART,
          id }
 }
-
-export const addItemsToState = (items) => {
-    return {
-        type: ADD_ITEMS_TO_STATE,
-        items
-    }
-}
