@@ -1,4 +1,4 @@
-import { ADD_TO_CART, SUBTRACT_FROM_CART, ADD_ITEMS_TO_STATE } from './action-types/constActions'
+import { ADD_TO_CART, SUBTRACT_FROM_CART } from './action-types/constActions'
 
 //Add to Cart Action
 
