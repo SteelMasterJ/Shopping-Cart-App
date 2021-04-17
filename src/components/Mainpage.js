@@ -170,7 +170,7 @@ class MainPage extends Component {
     render() {
         // console.log(this.props.saleItems);
 
-        //variable used to create table rows for each item returned from the API
+        //variable used to create li elements for each item returned from the API
         let saleItemList = this.state.forSaleItems.map( item => {
             return (
                 <li className={`bg-white border-2 border-blue-500 rounded-xl px-8 py-6 mb-2 cursor-pointer shadow hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
@@ -188,9 +188,6 @@ class MainPage extends Component {
                 </li>
             )
         })
-
-        //variable that is used to hold values of items that fit search or dropdown filters
-        let searchedItemShowList = this.state.searchedItems;
 
         return (
             <div className="pt-8 flex flex-col bg-gradient-to-b from-blue-300 via-purple-200 to-white h-screen">
@@ -246,7 +243,7 @@ class MainPage extends Component {
                 {(this.state.error) ? <p className={`mx-auto text-red-500`}>Error Fetching data! :(</p> : <div></div>}
                 {(this.state.loading === false) ?                 
                     <ul className={`grid grid-cols-1 md:grid-cols-3 gap-8 pt-6 mx-8`}>
-                        {(this.state.showAllItems) ? saleItemList : searchedItemShowList}
+                        {(this.state.showAllItems) ? saleItemList : this.state.searchedItems}
                     </ul> :
                     <p className="mx-auto">Loading items...</p>
                 }
