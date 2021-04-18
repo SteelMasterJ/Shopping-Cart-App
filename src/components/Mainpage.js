@@ -112,35 +112,37 @@ class MainPage extends Component {
         } else {
             let results = [];
             let query = event.value;
-            let searchedItemList;
+            // let searchedItemList;
             for (let i=0 ; i < this.state.forSaleItems.length ; i++) {
                 if (this.state.forSaleItems[i].type.toString().toLowerCase() === query.toString().toLowerCase()) {
                     results.push(this.state.forSaleItems[i]);
                 }
             }
-            if (results.length > 0) {
-                searchedItemList = results.map( item => {
-                    return (
-                        <li className={`bg-white border-2 border-blue-500 rounded-xl px-8 py-6 mb-2 cursor-pointer shadow hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
-                            <div className="text-center">
-                                <h3 className="mb-3 text-xl font-semibold text-purple-600">{item.name}</h3>
-                                <p>Unit Price: ${parseFloat(item.price).toFixed(2)}</p> 
-                                <p>
-                                    Category: {item.type} 
-                                </p>
-                                <div className="flex justify-center">
-                                <button className="bg-purple-700 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-500" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
-                            <button className="bg-purple-600 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-400" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
-                                </div>
-                            </div>        
-                        </li>
-                    )
-                })
-            }
+            // if (results.length > 0) {
+            //     searchedItemList = results.map( item => {
+            //         return (
+            //             <li className={`bg-white border-2 border-blue-500 rounded-xl px-8 py-6 mb-2 cursor-pointer shadow hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
+            //                 <div className="text-center">
+            //                     <h3 className="mb-3 text-xl font-semibold text-purple-600">{item.name}</h3>
+            //                     <p>Unit Price: ${parseFloat(item.price).toFixed(2)}</p> 
+            //                     <p>
+            //                         Category: {item.type} 
+            //                     </p>
+            //                     <div className="flex justify-center">
+            //                     <button className="bg-purple-700 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-500" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
+            //                 <button className="bg-purple-600 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-400" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
+            //                     </div>
+            //                 </div>        
+            //             </li>
+            //         )
+            //     })
+            // }
+            console.log(results);
             this.setState({
-                searchedItems: searchedItemList,
+                searchedItems: results,
                 showAllItems: false
             })
+            console.log(this.state.searchedItems);
         }
     }
 
@@ -188,6 +190,28 @@ class MainPage extends Component {
                 </li>
             )
         })
+
+        //variable to show results matches
+        let resultsShowList = [];
+        if (this.state.showAllItems === false) {
+            resultsShowList = this.state.searchedItems.map( item => {
+                return (
+                    <li className={`bg-white border-2 border-blue-500 rounded-xl px-8 py-6 mb-2 cursor-pointer shadow hover:shadow-xl transition duration-300 ease-in-out`} key={item.id}>
+                        <div className="text-center">
+                            <h3 className="mb-3 text-xl font-semibold text-purple-600">{item.name}</h3>
+                            <p>Unit Price: ${parseFloat(item.price).toFixed(2)}</p> 
+                            <p>
+                                Category: {item.type} 
+                            </p>
+                            <div className="flex justify-center">
+                                <button className="bg-purple-700 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-500" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
+                                <button className="bg-purple-600 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-400" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
+                            </div>
+                        </div>        
+                    </li>
+                )
+            });
+        }
 
         return (
             <div className="pt-8 flex flex-col bg-gradient-to-b from-blue-300 via-purple-200 to-white h-screen">
@@ -243,7 +267,7 @@ class MainPage extends Component {
                 {(this.state.error) ? <p className={`mx-auto text-red-500`}>Error Fetching data! :(</p> : <div></div>}
                 {(this.state.loading === false) ?                 
                     <ul className={`grid grid-cols-1 md:grid-cols-3 gap-8 pt-6 mx-8`}>
-                        {(this.state.showAllItems) ? saleItemList : this.state.searchedItems}
+                        {(this.state.showAllItems) ? saleItemList : resultsShowList}
                     </ul> :
                     <p className="mx-auto">Loading items...</p>
                 }
