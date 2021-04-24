@@ -179,9 +179,12 @@ class MainPage extends Component {
                             <p>
                                 Category: {item.type} 
                             </p>
+                            <p>
+                                Quantity: {item.quantity}
+                            </p>
                             <div className="flex justify-center">
-                                <button className="bg-purple-700 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-500" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
-                                <button className="bg-purple-600 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-400" onClick={()=>{this.handleSubtract(item.id)}}>-</button>
+                                <button className="bg-purple-700 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-500" onClick={()=>{this.handleAdd(item.id, item.name, item.price);this.addQuantity(item)}}>+</button>
+                                <button className="bg-purple-600 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-400" onClick={()=>{this.handleSubtract(item.id);this.subtractQuantity(item)}}>-</button>
                             </div>
                         </div>        
                     </li>
