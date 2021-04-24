@@ -34,6 +34,12 @@ class MainPage extends Component {
         this.props.subtractFromCart(id); 
     }
 
+
+    addInitialQuantity = (items) => {
+        const itemsWithQuantity = items.map(item =>({...item, quantity: 0}));
+        return itemsWithQuantity;
+    }
+
     //function to handle when the search bar is submitted, 
     //this function prevents the page from reloading then will 
     //hide items if their name doesnt exactly match the search string.
@@ -114,8 +120,9 @@ class MainPage extends Component {
         axios.get('https://my-json-server.typicode.com/steelmasterj/myjsonserver/data')
             .then(response => {
                 // console.log(response);
+                const itemsWithQuantity = response.data.map(item =>({...item, quantity: 0}));
                 this.setState({
-                    forSaleItems: response.data,
+                    forSaleItems: itemsWithQuantity,
                     error: '',
                     loading: false
                 })
@@ -141,6 +148,10 @@ class MainPage extends Component {
                         <p>Unit Price: ${parseFloat(item.price).toFixed(2)}</p> 
                         <p>
                             Category: {item.type} 
+                        </p>
+
+                        <p>
+                            Quantity: {item.quantity}
                         </p>
                         <div className="flex justify-center">
                             <button className="bg-purple-700 hover:bg-purple-900 shadow hover:shadow-xl text-white font-bold py-2 px-4 my-2 mx-3 rounded border-2 border-blue-500" onClick={()=>{this.handleAdd(item.id, item.name, item.price)}}>+</button>
@@ -238,7 +249,8 @@ class MainPage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        total: state.total
+        total: state.total,
+        cartItems: state.cartItems
     }
 }
 
